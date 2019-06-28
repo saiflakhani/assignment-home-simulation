@@ -20,29 +20,29 @@ def check_keys(current_device):
         if key not in list_of_essential_keys:
             print("Essential JSON keys missing. Please look at request documentation")
             return False
-        if key == 'mac address':
-            if not re.match("[0-9a-f]{2}([-:]?)[0-9a-f]{2}(\\1[0-9a-f]{2}){4}$",
-                            current_device[key].lower()): ## REGEX TO MATCH MAC ADDRESS
-                print("MAC address not in correct format. Please resend request")
+        if key == 'mac_address':
+            pattern = re.compile("^[a-fA-F0-9:]{17}|[a-fA-F0-9]{12}$")
+            if not pattern.match(current_device[key]): ## REGEX TO MATCH MAC ADDRESS
+                print("ERROR ---> MAC address not in correct format. Please resend request")
                 return False
         if key == 'device_type':
             if current_device[key] <=0 or current_device[key] >= 7: ## DEVICE TYPE RANGES FROM 1-6
-                print("Invalid Device Type. Please resend request")
+                print("ERROR ---> Invalid Device Type. Please resend request")
                 return False
         if key == 'rssi':
             if current_device[key]>=0 or current_device[key]<-100: ## RSSI CONTAINS ONLY NEGATIVE VALUES UP TO -100
-                print ("RSSI contains an invalid value. Please resend request")
+                print ("ERROR ---> RSSI contains an invalid value. Please resend request")
                 return False
         if key == 'value':
-            if not re.match("^(0x|0X)?[a-fA-F0-9]+$", ## REGEX TO MATCH HEXADECIMAL
-                            current_device[key]):
-                print('Value not hexadecimal. Please resend request.')
+            pattern = re.compile("0[xX][0-9a-fA-F]+")
+            if not pattern.match(current_device[key]) and len(current_device[key])<=5:
+                print('ERROR ---> Value not hexadecimal. Please resend request.')
                 return False
         if key == 'timestamp':
             try:
                 parser.parse(current_device[key]) ## TRY PARSING DATE
             except:
-                print("Could not parse timestamp. Please resend request.")
+                print("ERROR ---> Could not parse timestamp. Please resend request.")
 
     return True
 
