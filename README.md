@@ -2,9 +2,9 @@
 This repository was made in accordance with an assignment, for Home Simulation
 
 ## Prerequisites
-Python 2.7
-GCC
-Postman
+- Python 2.7
+- GCC
+- Postman
 
 ## Brief overview of the project
 - This project accepts sensor data from temperature, co2 and light sensors via JSON API
