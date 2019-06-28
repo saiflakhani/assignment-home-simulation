@@ -217,10 +217,12 @@ def temperature_decisions():
         print("Awaiting Temperature Sensor data")
 
 ### Function to turn bulbs ON / OFF based on Light sensor values
+## This function also handles the extra case
 def light_decisions():
     global local_data
     sensor = 1
     bulb = 2
+    door = 4
     ## First get all Sensor data values
     list_of_sensor_values = []
     list_of_sensors_to_remove = []
@@ -245,6 +247,7 @@ def light_decisions():
             elif avg_lux_value >= 50 :
                 print("It is Bright")
                 send_tcp_udp_data(bulb, "OFF","Bulb")
+                send_tcp_udp_data(door, "ON", "Door")
     else:
         print("Awaiting Light sensor data")
 
