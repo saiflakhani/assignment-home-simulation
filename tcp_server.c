@@ -47,6 +47,7 @@ void tcp_func(int sockfd) {
 
     char ack_message[3] = "ACK";
     write(sockfd, ack_message, sizeof(ack_message));
+    printf("Sent Acknowledgement\n");
 
     bzero(buff, MAX);
 
